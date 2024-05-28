@@ -34,7 +34,7 @@ class ObjectDetectionController extends Controller
             $path = 'uploads/' . $imageName;
         } else {
             return back()->withErrors(['error' => 'No image uploaded']);
-        }
+        } 
 
         $fullPath = storage_path('app/public/' . $path);
         $referenceImagePath = storage_path('app/public/uploads/warna.jpeg'); // Update this path accordingly
@@ -42,21 +42,16 @@ class ObjectDetectionController extends Controller
         $command = "python " . base_path('detect_and_compare.py') . " " . escapeshellarg($fullPath) . " " . escapeshellarg($referenceImagePath);
         $output = shell_exec($command);
         
-        // Log the output for debugging
         Log::info('Python script output: ' . $output);
 
-        // Split the output and check the contents
         $outputFiles = explode(',', trim($output));
 
-        // Check if the expected files are generated
         if (count($outputFiles) < 3) {
             return back()->withErrors(['error' => 'Python script did not produce the expected output.']);
         }
 
-        // Generate timestamp for filenames
         $timestamp = now()->format('Ymd_His');
 
-        // Save the output files to storage/app/public
         $csvPath = Storage::put("public/uploads/matching_colors_$timestamp.csv", file_get_contents($outputFiles[0]));
         $chartPath = Storage::put("public/uploads/matching_color_distances_$timestamp.png", file_get_contents($outputFiles[1]));
         $pdfPath = Storage::put("public/uploads/matching_color_distances_$timestamp.pdf", file_get_contents($outputFiles[2]));
