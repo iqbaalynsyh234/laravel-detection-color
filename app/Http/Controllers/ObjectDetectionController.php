@@ -10,7 +10,7 @@ class ObjectDetectionController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        return view('home');
     }
 
     public function upload(Request $request)
@@ -37,7 +37,7 @@ class ObjectDetectionController extends Controller
         } 
 
         $fullPath = storage_path('app/public/' . $path);
-        $referenceImagePath = storage_path('app/public/uploads/warna.jpeg'); // Update this path accordingly
+        $referenceImagePath = storage_path('app/public/uploads/warna.jpeg'); 
 
         $command = "python " . base_path('detect_and_compare.py') . " " . escapeshellarg($fullPath) . " " . escapeshellarg($referenceImagePath);
         $output = shell_exec($command);

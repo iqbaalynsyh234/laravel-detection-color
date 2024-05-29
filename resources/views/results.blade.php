@@ -35,7 +35,9 @@
         flex-direction: column;
         gap: 20px;
         align-items: center;
-        max-width: 600px;
+        width: 100%;
+        max-width: 1200px;
+        /* Optional max-width */
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0px 0px 40px #ddd9d9;
@@ -44,7 +46,6 @@
         margin: 20px 0;
     }
 
-    /* Left and Right Sections of the Card */
     .left,
     .right {
         flex: 1;
@@ -135,6 +136,18 @@
         font-size: 1.3em;
         cursor: pointer;
     }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .card {
+            flex-direction: column;
+        }
+
+        .left,
+        .right {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 
@@ -163,12 +176,6 @@
             </div>
         </div>
     </div>
+</body>
 
-    <div class="container">
-        <div class="card">
-            <h2>Chart Image</h2>
-            <div class="chart-image">
-                <img src="{{ $chartImagePath }}" alt="Chart Image">
-            </div>
-        </div>
-    </div>
+</html>
